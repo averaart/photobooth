@@ -1,6 +1,7 @@
 from Tkinter import *
 from datetime import datetime, timedelta
 from PIL import Image, ImageTk
+import piggyphoto as pp
 import cv2
 
 
@@ -16,12 +17,27 @@ class WebCam:
         cv2.imwrite(filename, self.get_preview())
         return filename
 
+class DSLR:
+    def __init__(self):
+        self.cam = pp.Camera()
+        self.cam.leave_locked()
+
+    def get_preview(self):
+        preview = self.cam.capture_preview("preview.jpg")
+        return cv2.imread("preview.jpg")
+
+    def get_picture(self):
+        filename = datetime.now().strftime("%Y%m%d%H%M%S") + ".jpg"
+        self.cam.set_config()
+        self.cam.capture_image(filename)
+        return filename
+
 
 class PhotoBooth:
     def __init__(self, parent):
         self.COUNTDOWN = 6
         self.DISPLAY_LATEST = 6
-        self.capture_device = WebCam()
+        self.capture_device = self.get_camera()
 
         # Calculate ideal size for images
         w = root.winfo_screenwidth()
@@ -100,6 +116,13 @@ class PhotoBooth:
         self.display_latest_until = None
 
         self.next_picture_time = datetime.now() + timedelta(seconds=self.COUNTDOWN)
+
+    def get_camera(self):
+        try:
+            return DSLR()
+        except Exception:
+            return WebCam()
+
 
 
 root = Tk()
