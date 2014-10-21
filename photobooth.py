@@ -28,7 +28,6 @@ class DSLR:
 
     def get_picture(self):
         filename = datetime.now().strftime("%Y%m%d%H%M%S") + ".jpg"
-        self.cam.set_config()
         self.cam.capture_image(filename)
         return filename
 
