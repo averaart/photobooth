@@ -127,7 +127,6 @@ class PhotoBooth:
 root = Tk()
 root.configure(background='black')
 root.wm_attributes('-fullscreen', 1)
-root.wm_attributes('-modified', 1)
 root.deiconify()
 
 photo_booth = PhotoBooth(root)

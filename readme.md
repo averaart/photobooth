@@ -19,6 +19,17 @@ The camera used can either be a webcam or a photo camera that is supported by gp
 - piggypython (<https://github.com/alexdu/piggyphoto>)
 
 
+Steps to run under Raspbian:
+
+	sudo apt-get install python-tk idle python-pmw python-imaging python-imaging-tk gphoto2
+	
+	# gphoto2-updater
+	wget https://raw.githubusercontent.com/gonzalo/gphoto2-updater/master/gphoto2-updater.sh
+	chmod +x gphoto2-updater.sh
+	sudo ./gphoto2-updater.sh
+
+
+
 ## Usage
 
 Just enter `python photobooth.py` in your favorite shell and you should be up and running. The pictures that are taken are stored in the folder from where the application was started. Filenames are just the date and time, in the form of yyyymmddhhmmss.jpg.
