@@ -83,7 +83,7 @@ class PhotoBooth:
                 self.text_display.set(self.next_picture_seconds)
             if next_picture_seconds == 0:
                 self.next_picture_time = None
-                self.text_display.set("")
+                self.text_display.set("Wait for it...")
                 self.latest_filename = self.capture_device.get_picture()
                 self.display_latest_until = datetime.now() + timedelta(seconds=self.DISPLAY_LATEST)
                 image = Image \
@@ -108,7 +108,7 @@ class PhotoBooth:
         elif self.display_latest_until < datetime.now():
             self.display_latest_until = None
 
-        self.parent.after(40, self.heartbeat)
+        self.parent.after(10, self.heartbeat)
 
     def set_next_picture(self, event):
         # Make sure the latest image stops displaying
