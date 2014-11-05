@@ -82,10 +82,9 @@ class PhotoBooth:
                 self.next_picture_seconds = next_picture_seconds
                 self.text_display.set(self.next_picture_seconds)
             if next_picture_seconds == 0:
-                self.next_picture_time = None
                 self.text_display.set("Wait for it...")
+                self.next_picture_time = None
                 self.latest_filename = self.capture_device.get_picture()
-                self.text_display.set("")
                 self.display_latest_until = datetime.now() + timedelta(seconds=self.DISPLAY_LATEST)
                 image = Image \
                     .open(self.latest_filename) \
@@ -94,6 +93,7 @@ class PhotoBooth:
                 display_image = ImageTk.PhotoImage(image)
                 self.container.imgtk = display_image
                 self.container.configure(image=display_image)
+                self.text_display.set("")
 
         if self.display_latest_until is None:
             # Capture preview
@@ -102,7 +102,8 @@ class PhotoBooth:
             preview = cv2.cvtColor(preview, cv2.COLOR_BGR2RGB)
             # Flip, so it makes sense to the user
             preview = cv2.flip(preview, 1)
-            display_image = ImageTk.PhotoImage(image=Image.fromarray(preview).resize(self.target_size, Image.ANTIALIAS))
+            display_image = ImageTk.PhotoImage(image=Image.fromarray(preview))
+            # display_image = ImageTk.PhotoImage(image=Image.fromarray(preview).resize(self.target_size, Image.ANTIALIAS))
             self.container.imgtk = display_image
             self.container.configure(image=display_image)
 
