@@ -27,7 +27,7 @@ class DSLR:
         return cv2.imread("preview.jpg")
 
     def get_picture(self):
-        filename = datetime.now().strftime("%Y%m%d%H%M%S") + ".jpg"
+        filename = datetime.now().strftime("%Y%m%d%H%M%S") + "-photobooth.jpg"
         self.cam.capture_image(filename)
         return filename
 
@@ -35,7 +35,7 @@ class DSLR:
 class PhotoBooth:
     def __init__(self, parent):
         self.COUNTDOWN = 6
-        self.DISPLAY_LATEST = 6
+        self.DISPLAY_LATEST = 15
         self.capture_device = self.get_camera()
 
         # Calculate ideal size for images
@@ -51,6 +51,7 @@ class PhotoBooth:
         self.parent = parent
         self.parent.bind('<Escape>', lambda e: root.quit())
         self.parent.bind('<space>', self.set_next_picture)
+        self.parent.bind('<Button-1>', self.set_next_picture)
 
         # Setup the content container
         self.text_display = StringVar()
